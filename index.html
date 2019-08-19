@@ -117,10 +117,12 @@
 				<h1 class="ui header">{{data.title}}</h1></div><div class="row" style="margin-top: -15px">
 				    <span class="ui label">内存限制：{{data.memory}} MB</span>
 				    <span class="ui label">时间限制：{{data.time}} ms</span>
-				    <span class="ui label">题目类型: {{data.type}}</span>
 				    <span class="ui label">评测方式: {{data.judge}}</span>
 				    </div></div><div class="ui grid"><div class="row"><div class="column">
-				<div class="ui buttons"><a href="javascript:void(0);" v-on:click="onBackClicked()" class="small ui primary button">返回</a></div>
+				<div class="ui buttons">
+				    <a href="javascript:void(0);" v-on:click="onBackClicked()" class="small ui primary button">返回</a>
+				    <a v-bind:href="data.url" class="small ui positive button">跳转到原题库</a>
+				</div>
 				</div></div>
 					<div class="row" v-for="i in data.block">
 					    <div class="column"><h4 class="ui top attached block header">{{i.title}}</h4>
@@ -133,7 +135,7 @@
 </div>
 `,
         data: () => {
-            return {data:{time:0,memory:0,type:"",judge:"",title:"数据加载中",block:[{title:"",html:""}]}};
+            return {data:{time:0,memory:0,judge:"",url:"javascript:void(0)",title:"数据加载中",block:[{title:"",html:""}]}};
         },
         methods: {
             onBackClicked(){
