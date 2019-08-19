@@ -101,13 +101,13 @@
                 for(const i of this.problemSet) {
                     axios('source/'+i.id+'/problemlist.json').then(response => {
                         i.problemList=response.data;
-                        if (i.id==="main") {
+                        if (i.id==="loj") {
                             this.problemList=i.problemList;
                         }
                     });
                 }
             });
-            this.nowOJ="main";
+            this.nowOJ="loj";
         }
     });
     let problemPage=Vue.extend({
