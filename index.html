@@ -47,7 +47,7 @@
             let t=i.trim();
             if (t.length>=3 && t[0]==='#' && t[1]===' ') {
                 if (title!==null) {
-                    data.block[data.block.length]={title:title,html:marked(doc)};
+                    data.block[data.block.length]={title:title,html:data.description_type==="html"?doc:marked(doc)};
                 }
                 title=t.substring(2,t.length);
                 doc="";
