@@ -41,18 +41,22 @@
         data.block=[];
         let desc=(await axios.get(`source/${oj}/${pid}/description.md`)).data;
         data.description=null;
-        desc+="# !\n";
         let title=null,doc="";
-        for (let i of desc.split('\n')) {
-            let t=i.trim();
-            if (t.length>=3 && t[0]==='#' && t[1]===' ') {
-                if (title!==null) {
-                    data.block[data.block.length]={title:title,html:data.description_type==="html"?doc:marked(doc)};
+        if (data.description_type==="html_final") {
+            data.html_final=desc;
+        } else {
+            desc+="# !\n";
+            for (let i of desc.split('\n')) {
+                let t=i.trim();
+                if (t.length>=3 && t[0]==='#' && t[1]===' ') {
+                    if (title!==null) {
+                        data.block[data.block.length]={title:title,html:data.description_type==="html"?doc:marked(doc)};
+                    }
+                    title=t.substring(2,t.length);
+                    doc="";
+                } else {
+                    doc+=i+'\n';
                 }
-                title=t.substring(2,t.length);
-                doc="";
-            } else {
-                doc+=i+'\n';
             }
         }
         return await data;
@@ -131,11 +135,12 @@
 						    </div></div>
 						</div>
 					</div>
+					<div v-html="data.html_final"></div>
 		</div></div>
 </div>
 `,
         data: () => {
-            return {data:{time:0,memory:0,judge:"",url:"javascript:void(0)",title:"数据加载中",block:[{title:"",html:""}]}};
+            return {data:{time:0,memory:0,judge:"",url:"javascript:void(0)",title:"数据加载中",block:[{title:"",html:""}],html_final:""}};
         },
         methods: {
             onBackClicked(){
